@@ -10,9 +10,11 @@ signers within EOS Canada, an internal msig needs to be crafted.
   ```
 eosc multisig approve [proposer] [proposal_name] eoscanadacom@active --expiration 3600 --skip-sign --write-transaction [file_name].json
 ```
-Use the `expiration` field to ensure you'll have enough time to gather the required threshold.
+* Use the `expiration` field to ensure you'll have enough time to gather the required threshold. (measured in seconds)
+* `--skip-sign` will remove the signing step, and ensure that the transaction is not broadcast
+* `--write-transaction` will create a json file of the transaction
 
-2. To verify that you have the required authorizations in place, run:
+2. If you'd like to verify the contents of the transaction, run:
 ```
 eosc tx unpack [file_name].json
 ```
@@ -54,17 +56,18 @@ You should have a print out like this:
 
 3. To create the internal msig, run:
 ```
-eosc multisig propose [your_account_name] [second_proposal_name] [file_name].json --requested-permissions eoscanadacom@active --with-subaccounts
+eosc multisig propose [your_account_name] [new_proposal_name] [file_name].json --requested-permissions eoscanadacom@active --with-subaccounts
 ```
 Using the `--with-subaccounts` flag will automatically fill in all of the account names associated to that permission.
 
 4. Pass along
 ```
-eosc multisig review [your_account_name] [second_proposal_name]
+eosc multisig review [your_account_name] [new_proposal_name]
 ```
-And now you pester everyone on Slack :)
+to all requested signatories.
 
-
-
-
-
+Once the required weight threshold has been met, anyone can run 
+```
+eosc multisig exec [proposer] [new_proposal_name] [executer]
+```
+and the approval of the original proposal should now be signed.
