@@ -66,6 +66,7 @@ eosc multisig review [your_account_name] [new_proposal_name]
 ```
 to all requested signatories.
 
+5. Executing the proposal
 Once the required weight threshold has been met, anyone can run 
 ```
 eosc multisig exec [proposer] [new_proposal_name] [executer]
